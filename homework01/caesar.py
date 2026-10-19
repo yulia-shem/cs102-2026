@@ -16,18 +16,14 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    for x in plaintext:
-        if x not in "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm":
-            ciphertext += x
+    for char in plaintext:
+        if not ("A" <= char <= "Z" or "a" <= char <= "z"):
+            ciphertext += char
         else:
-            if x.isupper() == 1 and ord(x) + shift > 90:
-                ciphertext += chr(ord(x) + shift - 26)
-            elif x.isupper() == 1 and ord(x) + shift <= 90:
-                ciphertext += chr(ord(x) + shift)
-            if x.islower() == 1 and ord(x) + shift > 122:
-                ciphertext += chr(ord(x) + shift - 26)
-            elif x.islower() == 1 and ord(x) + shift <= 122:
-                ciphertext += chr(ord(x) + shift)
+            if char.isupper() and ord(char) + shift > ord("Z") or char.islower() and ord(char) + shift > ord("z"):
+                ciphertext += chr(ord(char) + shift - 26)
+            elif char.isupper() and ord(char) + shift <= ord("Z") or char.islower() and ord(char) + shift <= ord("z"):
+                ciphertext += chr(ord(char) + shift)
     return ciphertext
 
 
@@ -45,16 +41,12 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
     plaintext = ""
     # PUT YOUR CODE HERE
-    for x in ciphertext:
-        if x not in "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm":
-            plaintext += x
+    for char in ciphertext:
+        if not ("A" <= char <= "Z" or "a" <= char <= "z"):
+            plaintext += char
         else:
-            if x.isupper() == 1 and ord(x) - shift >= 65:
-                plaintext += chr(ord(x) - shift)
-            elif x.isupper() == 1 and ord(x) - shift < 65:
-                plaintext += chr(ord(x) - shift + 26)
-            if x.islower() == 1 and ord(x) - shift >= 97:
-                plaintext += chr(ord(x) - shift)
-            elif x.islower() == 1 and ord(x) - shift < 97:
-                plaintext += chr(ord(x) - shift + 26)
+            if char.isupper() and ord(char) - shift < ord("A") or char.islower() == 1 and ord(char) - shift < ord("a"):
+                plaintext += chr(ord(char) - shift + 26)
+            elif char.isupper() and ord(char) - shift >= ord("A") or char.islower() and ord(char) - shift >= ord("a"):
+                plaintext += chr(ord(char) - shift)
     return plaintext

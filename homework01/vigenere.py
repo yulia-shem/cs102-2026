@@ -17,23 +17,17 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     key = keyword
     while len(key) < len(plaintext):
         key += keyword
-    for x in plaintext:
+    for char in plaintext:
         first_sym = key.lower()[0]
         key = key[1:]
-        if x not in "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm":
-            ciphertext += x
+        if not ("A" <= char <= "Z" or "a" <= char <= "z"):
+            ciphertext += char
         else:
             shift = ord(first_sym) - 97
-            if x.islower() == 1:
-                if ord(x) + shift > 122:
-                    ciphertext += chr(ord(x) + shift - 26)
-                else:
-                    ciphertext += chr(ord(x) + shift)
+            if char.islower() and ord(char) + shift > ord("z") or char.isupper() and ord(char) + shift > ord("Z"):
+                ciphertext += chr(ord(char) + shift - 26)
             else:
-                if ord(x) + shift > 90:
-                    ciphertext += chr(ord(x) + shift - 26)
-                else:
-                    ciphertext += chr(ord(x) + shift)
+                ciphertext += chr(ord(char) + shift)
     return ciphertext
 
 
@@ -52,21 +46,15 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     key = keyword
     while len(key) < len(ciphertext):
         key += keyword
-    for x in ciphertext:
+    for char in ciphertext:
         first_sym = key.lower()[0]
         key = key[1:]
-        if x not in "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm":
-            plaintext += x
+        if not ("A" <= char <= "Z" or "a" <= char <= "z"):
+            plaintext += char
         else:
             shift = ord(first_sym) - 97
-            if x.islower() == 1:
-                if ord(x) - shift >= 97:
-                    plaintext += chr(ord(x) - shift)
-                else:
-                    plaintext += chr(ord(x) - shift + 26)
+            if char.islower() and ord(char) - shift >= ord("a") or char.isupper() and ord(char) - shift >= ord("A"):
+                plaintext += chr(ord(char) - shift)
             else:
-                if ord(x) - shift >= 65:
-                    plaintext += chr(ord(x) - shift)
-                else:
-                    plaintext += chr(ord(x) - shift + 26)
+                plaintext += chr(ord(char) - shift + 26)
     return plaintext

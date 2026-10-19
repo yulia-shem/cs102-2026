@@ -15,7 +15,7 @@ def is_prime(n: int) -> bool:
     # PUT YOUR CODE HERE
     k = 2
     n_pr = True
-    if n < 0 or n == 1:
+    if n <= 1:
         n_pr = False
     else:
         while k**2 <= n:
